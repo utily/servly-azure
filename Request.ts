@@ -6,6 +6,7 @@ export class Request implements servly.Request {
 	readonly url: string
 	readonly query: { [key: string]: string; }
 	readonly parameter: { [key: string]: string; }
+	get remote(): string | undefined { return (this.backend.params.MS_HttpContext as any as { request: { userHostAddress: string } })?.request?.userHostAddress }
 	readonly header: servly.Request.Header
 	readonly raw: Promise<any>
 	constructor(private readonly backend: HttpRequest) {
