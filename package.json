@@ -4,6 +4,14 @@
  "description": "Azure Functions target for Servly.",
  "author": "PayFunc",
  "license": "MIT",
+ "repository": {
+	"type": "git",
+	"url": "git+https://github.com/payfunc/servly-azure"
+ },
+ "bugs": {
+	"url": "https://github.com/payfunc/servly-azure/issues"
+ },
+ "homepage": "https://payfunc.com/open-source/servly-azure",
  "private": false,
  "main": "dist/index.js",
  "typings": "dist/index.d.ts",
