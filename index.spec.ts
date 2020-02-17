@@ -16,6 +16,11 @@ describe("servly-azure", () => {
 			functionName: "run",
 			functionDirectory: "./",
 		},
+		traceContext: {
+			traceparent: undefined,
+			tracestate: undefined,
+			attributes: undefined,
+		},
 		bindings: {},
 		bindingData: {},
 		bindingDefinitions: [],
