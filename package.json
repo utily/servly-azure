@@ -52,7 +52,7 @@
  },
  "dependencies": {
   "@azure/functions": "^1.2.0",
-  "servly": "payfunc/servly#log"
+  "servly": "0.0.13"
  },
  "devDependencies": {
   "@types/jest": "^25.1.2",
