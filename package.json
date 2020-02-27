@@ -1,6 +1,6 @@
 {
  "name": "servly-azure",
- "version": "0.0.5",
+ "version": "0.0.6",
  "description": "Azure Functions target for Servly.",
  "author": "PayFunc",
  "license": "MIT",
@@ -52,7 +52,7 @@
  },
  "dependencies": {
   "@azure/functions": "^1.2.0",
-  "servly": "0.0.10"
+  "servly": "payfunc/servly#log"
  },
  "devDependencies": {
   "@types/jest": "^25.1.2",

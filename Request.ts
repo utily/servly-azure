@@ -1,5 +1,5 @@
 import * as process from "process"
-import { HttpRequest } from "@azure/functions"
+import { Context, HttpRequest } from "@azure/functions"
 import * as servly from "servly"
 
 export class Request implements servly.Request {
@@ -11,7 +11,7 @@ export class Request implements servly.Request {
 	get remote(): string | undefined { return (this.backend.params.MS_HttpContext as any as { request: { userHostAddress: string } })?.request?.userHostAddress }
 	readonly header: servly.Request.Header
 	readonly raw: Promise<any>
-	constructor(private readonly backend: HttpRequest) {
+	constructor(private readonly context: Context, private readonly backend: HttpRequest) {
 		this.method = this.backend && this.backend.method || undefined
 		this.url = this.backend && this.backend.url || ""
 		if (process.env.baseUrl)
@@ -23,5 +23,8 @@ export class Request implements servly.Request {
 		this.parameter = this.backend && this.backend.params || {}
 		this.header = this.backend && servly.Request.Header.from(this.backend.headers) || {}
 		this.raw = this.backend && Promise.resolve(this.backend.rawBody)
+	}
+	log(message?: any, ...parameters: any[]): void {
+		this.context.log(message, ...parameters)
 	}
 }
