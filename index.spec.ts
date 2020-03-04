@@ -44,6 +44,7 @@ describe("servly-azure", () => {
 			headers: {
 				"Content-Type": "application/json; charset=utf-8",
 			},
+			isRaw: true,
 			status: 200,
 		})
 	})
@@ -58,6 +59,7 @@ describe("servly-azure", () => {
 			headers: {
 				"Content-Type": "application/json; charset=utf-8",
 			},
+			isRaw: true,
 			status: 200,
 		})
 	})
@@ -73,6 +75,7 @@ describe("servly-azure", () => {
 			headers: {
 				"Content-Type": "application/json; charset=utf-8",
 			},
+			isRaw: true,
 			status: 200,
 		})
 		delete process.env.baseUrl
