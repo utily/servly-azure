@@ -25,6 +25,6 @@ export class Request implements servly.Request {
 		this.raw = this.backend && Promise.resolve(this.backend.rawBody)
 	}
 	log(message?: any, ...parameters: any[]): void {
-		this.context.log(typeof message == "string" ? message.replace("\n", "") : message, ...parameters)
+		this.context.log(typeof message == "string" ? message.replace("\n", " ") : message, ...parameters)
 	}
 }
