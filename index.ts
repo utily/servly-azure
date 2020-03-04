@@ -9,6 +9,7 @@ export const eject: servly.Endpoint.Ejector<AzureFunction> = (endpoint: servly.E
 			status: response.status,
 			headers: servly.Response.Header.to(response.header),
 			body: response.body,
+			isRaw: true,
 		}
 	}
 }
