@@ -11,5 +11,6 @@ export const eject: servly.Endpoint.Ejector<AzureFunction> = (endpoint: servly.E
 			body: response.body,
 			isRaw: true,
 		}
+		await servly.finish()
 	}
 }
