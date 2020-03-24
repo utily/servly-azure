@@ -28,8 +28,9 @@ export class Request implements servly.Request {
 		this.context.log(format(message), parameters.map(format))
 	}
 }
+const log = console.log
 console.log = (message?: any, ...parameters: any[]) => {
-	console.log(format(message), parameters.map(format))
+	log(format(message), parameters.map(format))
 }
 function format(value: any): string {
 	let result: string
