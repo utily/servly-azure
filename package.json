@@ -52,7 +52,7 @@
  },
  "dependencies": {
   "@azure/functions": "^1.2.0",
-  "servly": "github:payfunc/servly#schedule-finish"
+  "servly": "0.0.15"
  },
  "devDependencies": {
   "@types/jest": "^25.1.2",
