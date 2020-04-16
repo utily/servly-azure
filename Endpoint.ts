@@ -1,0 +1,15 @@
+import { AzureFunction, Context, HttpRequest } from "@azure/functions"
+import * as servly from "servly"
+import { Request } from "./Request"
+
+export const eject: servly.Function.Ejector<AzureFunction> = (handler: servly.Endpoint) => {
+	return async (context: Context, request: HttpRequest) => {
+		const response = await handler(new Request(context, request))
+		context.res = {
+			status: response.status,
+			headers: servly.Response.Header.to(response.header),
+			body: response.body,
+			isRaw: true,
+		}
+	}
+}
