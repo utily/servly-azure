@@ -19,7 +19,7 @@ export const eject: servly.Function.Ejector<azure.AzureFunction> = (handler: ser
 			body: response.body,
 			isRaw: true,
 		}
-		context.bindings.log = log
-		context.bindings.callback = callback
+		context.bindings.log = log.entries.length > 0 ? log : undefined
+		context.bindings.callback = callback.length > 0 ? callback : undefined
 	}
 }

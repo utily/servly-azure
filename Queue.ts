@@ -11,7 +11,7 @@ export function eject<T, S>(handler: servly.Queue<T, S>): azure.AzureFunction {
 		}
 		const callback: servly.Request[] = []
 		await handler(item, Context.create(context, log, callback))
-		context.bindings.log = log
-		context.bindings.callback = callback
+		context.bindings.log = log.entries.length > 0 ? log : undefined
+		context.bindings.callback = callback.length > 0 ? callback : undefined
 	}
 }
