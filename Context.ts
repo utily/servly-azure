@@ -14,17 +14,17 @@ export namespace Context {
 				content = servly.Log.Content.freeze(content)
 				switch (level) {
 					case "trace":
-						context.log.info(step, level, content)
+						context.log.info(step, level, JSON.stringify(content))
 						break
 					case "debug":
-						context.log.verbose(step, level, content)
+						context.log.verbose(step, level, JSON.stringify(content))
 						break
 					case "warning":
-						context.log.warn(step, level, content)
+						context.log.warn(step, level, JSON.stringify(content))
 						break
 					case "error":
 					case "fatal":
-						context.log.error(step, level, content)
+						context.log.error(step, level, JSON.stringify(content))
 						break
 				}
 				log.entries.push({
