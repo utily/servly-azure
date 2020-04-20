@@ -1,4 +1,5 @@
-import { AzureFunction, Context } from "@azure/functions"
+import * as azure from "@azure/functions"
+import { Context } from "./Context"
 import * as servly from "servly"
 
 type AzureTimer = {
@@ -16,4 +17,14 @@ type AzureTimer = {
 	FormatNextOccurences: (count: number, now?: Date) => string
 }
 
-export const eject: servly.Function.Ejector<AzureFunction> = (handler: servly.Timer) => (context: Context, timer: AzureTimer) => handler()
+export const eject: servly.Function.Ejector<azure.AzureFunction> = (handler: servly.Timer) => (context: azure.Context, timer: AzureTimer) => {
+	const log: servly.Log = {
+		invocation: context.executionContext.invocationId,
+		point: context.executionContext.functionName,
+		entries: []
+	}
+	const callback: servly.Request[] = []
+	handler(Context.create(context, log, callback))
+	context.bindings.log = log
+	context.bindings.callback = callback
+}
