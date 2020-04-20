@@ -11,6 +11,7 @@ export namespace Context {
 				path: context.executionContext.functionDirectory,
 			},
 			log: (step: string, level: servly.Log.Level, content: servly.Log.Content) => {
+				content = servly.Log.Content.freeze(content)
 				switch (level) {
 					case "trace":
 						context.log.info(step, level, content)
