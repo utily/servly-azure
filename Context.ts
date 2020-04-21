@@ -4,7 +4,7 @@ import * as servly from "servly"
 
 export namespace Context {
 	export function create(context: azure.Context, log: servly.Log, callback: servly.Request[]) {
-		return servly.Context.create({
+		const result = servly.Context.create({
 			id: context.executionContext.invocationId,
 			function: {
 				name: context.executionContext.functionName,
@@ -21,7 +21,7 @@ export namespace Context {
 						l = context.log.error
 						break
 				}
-				l(step, level, JSON.stringify(content))
+				l(step, level, JSON.stringify(result.meta), JSON.stringify(content))
 				log.entries.push({
 					created: isoly.DateTime.now(),
 					step,
@@ -31,5 +31,6 @@ export namespace Context {
 			},
 			callback: (r: servly.Request) => callback.push(r),
 		})
+		return result
 	}
 }
