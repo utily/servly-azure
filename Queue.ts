@@ -7,11 +7,13 @@ export function eject<T, S>(handler: servly.Queue<T, S>): azure.AzureFunction {
 		const log: servly.Log = {
 			invocation: context.executionContext.invocationId,
 			point: context.executionContext.functionName,
-			entries: []
+			meta: {},
+			entries: [],
 		}
 		const callback: servly.Request[] = []
-		await handler(item, Context.create(context, log, callback))
-		context.bindings.log = log.entries.length > 0 ? log : undefined
-		context.bindings.callback = callback.length > 0 ? callback : undefined
-	}
+		const c = Context.create(context, log, callback)
+		await handler(item, c)
+		context.bindings.log = log.entries.length > 0 ? { ...log, meta: c.meta } : undefined
+		context.bindings.callback = callback.length > 0 ? callback.map(cb => ({ ...cb, meta: c.meta })) : undefined
+		}
 }
