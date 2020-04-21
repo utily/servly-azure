@@ -53,7 +53,7 @@
  "dependencies": {
   "@azure/functions": "^1.2.0",
   "isoly": "0.0.13",
-  "servly": "0.0.20"
+  "servly": "github:payfunc/servly#production"
  },
  "devDependencies": {
   "@types/jest": "^25.1.4",
