@@ -27,6 +27,16 @@ export class Request implements servly.Request {
 	log(message?: any, ...parameters: any[]): void {
 		this.context.log(format(message), parameters.map(format))
 	}
+	protected toJSON(): Omit<servly.Request, "log" | "baseUrl"> {
+		return {
+			method: this.method,
+			url: this.url,
+			query: this.query,
+			parameter: this.parameter,
+			remote: this.remote,
+			header: this.header,
+		}
+	}
 }
 const log = console.log
 console.log = (message?: any, ...parameters: any[]) => {
