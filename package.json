@@ -52,7 +52,8 @@
  },
  "dependencies": {
   "@azure/functions": "^1.2.0",
-  "servly": "0.0.18"
+  "isoly": "0.0.13",
+  "servly": "0.0.19"
  },
  "devDependencies": {
   "@types/jest": "^25.1.4",
