@@ -10,28 +10,23 @@ export namespace Context {
 				name: context.executionContext.functionName,
 				path: context.executionContext.functionDirectory,
 			},
-			log: (step: string, level: servly.Log.Level, content: servly.Log.Content) => {
-				content = servly.Log.Content.freeze(content)
+			log: (step: string, level: servly.Log.Level, content: servly.Content) => {
+				let l: (...args: any[]) => void = context.log
 				switch (level) {
-					case "trace":
-						context.log.info(step, level, JSON.stringify(content))
-						break
-					case "debug":
-						context.log.verbose(step, level, JSON.stringify(content))
-						break
-					case "warning":
-						context.log.warn(step, level, JSON.stringify(content))
-						break
+					case "trace": l = context.log.info; break
+					case "debug": l = context.log.verbose; break
+					case "warning": l = context.log.warn; break
 					case "error":
 					case "fatal":
-						context.log.error(step, level, JSON.stringify(content))
+						l = context.log.error
 						break
 				}
+				l(step, level, JSON.stringify(content))
 				log.entries.push({
 					created: isoly.DateTime.now(),
 					step,
 					level,
-					content,
+					content: servly.Content.freeze(content),
 				})
 			},
 			callback: (r: servly.Request) => callback.push(r),
