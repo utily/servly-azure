@@ -3,7 +3,7 @@ import * as servly from "servly"
 import * as azure from "./index"
 
 describe("servly-azure", () => {
-	const endpoint = servly.Endpoint.create(async request => ({
+	const endpoint = servly.Endpoint.create(async (_, request) => ({
 		body: { name: "servly", url: request.url, baseUrl: request.baseUrl },
 	}))
 	const run = azure.eject(endpoint)

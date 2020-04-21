@@ -10,7 +10,7 @@ export namespace Context {
 				name: context.executionContext.functionName,
 				path: context.executionContext.functionDirectory,
 			},
-			log: (step: string, level: servly.Log.Level, content: servly.Content) => {
+			log: (step: string, level: servly.Log.Level, content: any) => {
 				let l: (...args: any[]) => void = context.log
 				switch (level) {
 					case "trace": l = context.log.info; break
