@@ -1,6 +1,6 @@
 {
  "name": "servly-azure",
- "version": "0.0.15",
+ "version": "0.0.16",
  "description": "Azure Functions target for Servly.",
  "author": "PayFunc",
  "license": "MIT",
