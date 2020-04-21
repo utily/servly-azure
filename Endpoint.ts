@@ -21,7 +21,7 @@ export const eject: servly.Function.Ejector<azure.AzureFunction> = (handler: ser
 			isRaw: true,
 		}
 		const meta = servly.Meta.freeze(c.meta)
-		context.bindings.log = log.entries.length > 0 ? { ...log, meta } : undefined
+		context.bindings.log = log.entries.length > 0 ? { ...log, ...meta } : undefined
 		context.bindings.callback = callback.length > 0 ? callback.map(cb => ({ ...cb, meta })) : undefined
 	}
 }
