@@ -24,27 +24,14 @@ export class Request implements servly.Request {
 		this.header = this.backend && servly.Request.Header.from(this.backend.headers) || {}
 		this.raw = this.backend && Promise.resolve(this.backend.rawBody)
 	}
-	log(message?: any, ...parameters: any[]): void {
-		this.context.log(format(message), parameters.map(format))
+	protected toJSON(): Omit<servly.Request, "log" | "baseUrl"> {
+		return {
+			method: this.method,
+			url: this.url,
+			query: this.query,
+			parameter: this.parameter,
+			remote: this.remote,
+			header: this.header,
+		}
 	}
-}
-const log = console.log
-console.log = (message?: any, ...parameters: any[]) => {
-	log(format(message), parameters.map(format))
-}
-function format(value: any): string {
-	let result: string
-	switch (typeof value) {
-		default:
-		case "object":
-			result = JSON.stringify(value)
-			break
-		case "number":
-			result = value.toString()
-			break
-		case "string":
-			result = value
-			break
-	}
-	return result.replace("\n", " ")
 }

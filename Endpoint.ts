@@ -8,7 +8,6 @@ export const eject: servly.Function.Ejector<azure.AzureFunction> = (handler: ser
 		const log: servly.Log = {
 			invocation: context.executionContext.invocationId,
 			point: context.executionContext.functionName,
-			meta: {},
 			entries: [],
 		}
 		const callback: servly.Request[] = []

@@ -7,7 +7,6 @@ export function eject<T, S>(handler: servly.Queue<T, S>): azure.AzureFunction {
 		const log: servly.Log = {
 			invocation: context.executionContext.invocationId,
 			point: context.executionContext.functionName,
-			meta: {},
 			entries: [],
 		}
 		const callback: servly.Request[] = []
