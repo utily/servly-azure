@@ -1,5 +1,5 @@
 import * as process from "process"
-import { Context, HttpRequest } from "@azure/functions"
+import { HttpRequest } from "@azure/functions"
 import * as servly from "servly"
 
 export class Request implements servly.Request {
@@ -8,23 +8,24 @@ export class Request implements servly.Request {
 	readonly baseUrl: string
 	readonly query: { [key: string]: string; }
 	readonly parameter: { [key: string]: string; }
-	get remote(): string | undefined { return (this.backend.params.MS_HttpContext as any as { request: { userHostAddress: string } })?.request?.userHostAddress }
+	readonly remote: string | undefined
 	readonly header: servly.Request.Header
 	readonly raw: Promise<any>
-	constructor(private readonly context: Context, private readonly backend: HttpRequest) {
-		this.method = this.backend && this.backend.method || undefined
-		this.url = this.backend && this.backend.url || ""
+	constructor(backend: HttpRequest) {
+		this.method = backend && backend.method || undefined
+		this.url = backend && backend.url || ""
 		if (process.env.baseUrl)
 			this.url = process.env.baseUrl + (this.url && this.url.slice(this.url.split("/", this.url.includes("//") ? 3 : 1).join("/").length))
 		else if (this.url.startsWith("http://") && !this.url.startsWith("http://localhost")) // TODO: Fix for bug in Azure
 			this.url = "https:" + this.url.slice(5)
 		this.baseUrl = this.url.split("/", this.url.includes("//") ? 3 : 1).join("/")
-		this.query = this.backend && this.backend.query || {}
-		this.parameter = this.backend && this.backend.params || {}
-		this.header = this.backend && servly.Request.Header.from(this.backend.headers) || {}
-		this.raw = this.backend && Promise.resolve(this.backend.rawBody)
+		this.query = backend && backend.query || {}
+		this.parameter = backend && backend.params || {}
+		this.remote = (backend.params.MS_HttpContext as any as { request: { userHostAddress: string } })?.request?.userHostAddress
+		this.header = backend && servly.Request.Header.from(backend.headers) || {}
+		this.raw = backend && Promise.resolve(backend.rawBody)
 	}
-	protected toJSON(): Omit<servly.Request, "log" | "baseUrl"> {
+	toJSON(): Omit<servly.Request, "baseUrl"> {
 		return {
 			method: this.method,
 			url: this.url,
