@@ -173,7 +173,7 @@ describe("servly.Request", () => {
 			},
 			done: (_?: string | Error | null, result?: any) => Promise.resolve(result),
 		}
-		const request = new Request(context, req)
+		const request = new Request(req)
 		expect(JSON.stringify(request)).toEqual("{\"method\":\"GET\",\"url\":\"http://localhost:7071/version\",\"query\":{},\"parameter\":{},\"header\":{\"accept\":\"*/*\",\"host\":\"localhost:7071\",\"user-agent\":\"insomnia/7.1.1\"}}")
 	})
 })

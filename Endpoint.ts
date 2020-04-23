@@ -12,7 +12,7 @@ export const eject: servly.Function.Ejector<azure.AzureFunction> = (handler: ser
 		}
 		const callback: servly.Request[] = []
 		const c = Context.create(context, log, callback)
-		const response = await handler(c, new Request(context, request))
+		const response = await handler(c, new Request(request))
 		context.res = {
 			status: response.status,
 			headers: servly.Response.Header.to(response.header),
