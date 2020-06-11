@@ -51,19 +51,19 @@
   "clean": "rm -rf dist node_modules coverage"
  },
  "dependencies": {
-  "@azure/functions": "^1.2.0",
-  "isoly": "0.0.13",
-  "servly": "^0.1.4"
+  "@azure/functions": "^1.2.2",
+  "isoly": "0.0.14",
+  "servly": "^0.1.6"
  },
  "devDependencies": {
-  "@types/jest": "^25.2.1",
-  "@types/node": "^13.13.2",
+  "@types/jest": "^26.0.0",
+  "@types/node": "^14.0.13",
   "babel-core": "^6.26.3",
-  "babel-jest": "^25.4.0",
-  "jest": "^25",
-  "ts-jest": "^25.4.0",
-  "tslint": "^6.1.1",
-  "typescript": "^3.8.3",
+  "babel-jest": "^26.0.1",
+  "jest": "^26",
+  "ts-jest": "^26.1.0",
+  "tslint": "^6.1.2",
+  "typescript": "^3.9.5",
   "watch": "^1.0.2"
  }
 }
