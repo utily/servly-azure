@@ -15,5 +15,5 @@ export function eject<T, S>(handler: servly.Queue<T, S>): azure.AzureFunction {
 		const meta = servly.Meta.freeze(c.meta)
 		context.bindings.log = log.entries.length > 0 ? { ...log, ...meta } : undefined
 		context.bindings.callback = callback.length > 0 ? callback.map(cb => ({ ...cb, meta })) : undefined
-		}
+	}
 }
