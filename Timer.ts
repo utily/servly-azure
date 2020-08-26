@@ -17,7 +17,10 @@ type AzureTimer = {
 	FormatNextOccurences: (count: number, now?: Date) => string
 }
 
-export const eject: servly.Function.Ejector<azure.AzureFunction> = (handler: servly.Timer) => async (context: azure.Context, timer: AzureTimer): Promise<void> => {
+export const eject: servly.Function.Ejector<azure.AzureFunction> = (handler: servly.Timer) => async (
+	context: azure.Context,
+	timer: AzureTimer
+): Promise<void> => {
 	const log: servly.Log = {
 		invocation: context.executionContext.invocationId,
 		point: context.executionContext.functionName,

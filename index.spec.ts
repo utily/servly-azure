@@ -1,4 +1,5 @@
-import { Context, HttpRequest, Logger } from "@azure/functions"
+/* eslint-disable @typescript-eslint/no-empty-function */
+import { Context, HttpRequest } from "@azure/functions"
 import * as servly from "servly"
 import * as azure from "./index"
 
@@ -7,7 +8,13 @@ describe("servly-azure", () => {
 		body: { name: "servly", url: request.url, baseUrl: request.baseUrl },
 	}))
 	const run = azure.eject(endpoint)
-	const req: HttpRequest = { url: "http://test.com/folder/file.extension", method: "GET", headers: {}, query: {}, params: {} }
+	const req: HttpRequest = {
+		url: "http://test.com/folder/file.extension",
+		method: "GET",
+		headers: {},
+		query: {},
+		params: {},
+	}
 	const context: Context = {
 		req,
 		invocationId: "1337",
@@ -25,11 +32,11 @@ describe("servly-azure", () => {
 		bindingData: {},
 		bindingDefinitions: [],
 		log: {
-			...Object.assign((..._: any[]) => { }),
-			error: (..._: any[]) => { },
-			warn: (..._: any[]) => { },
-			info: (..._: any[]) => { },
-			verbose: (..._: any[]) => { },
+			...Object.assign((..._: any[]) => {}),
+			error: (..._: any[]) => {},
+			warn: (..._: any[]) => {},
+			info: (..._: any[]) => {},
+			verbose: (..._: any[]) => {},
 		},
 		done: (_?: string | Error | null, result?: any) => Promise.resolve(result),
 	}
