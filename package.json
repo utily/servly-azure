@@ -56,7 +56,7 @@
 		"eslint-plugin-prettierx": "github:nilssonemma/eslint-plugin-prettierx#master",
 		"isoly": "0.0.14",
 		"prettierx": "github:simonmika/prettierx#newline-before-clause",
-		"servly": "^0.1.6"
+		"servly": "^0.1.10"
 	},
 	"devDependencies": {
 		"@types/jest": "^26.0.0",
