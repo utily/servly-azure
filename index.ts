@@ -1,6 +1,6 @@
 import * as Endpoint from "./Endpoint"
-import * as Timer from "./Timer"
 import * as Queue from "./Queue"
+import * as Timer from "./Timer"
 
 const eject = Endpoint.eject
 
