@@ -1,6 +1,6 @@
-import * as process from "process"
-import { HttpRequest } from "@azure/functions"
 import * as servly from "servly"
+import { HttpRequest } from "@azure/functions"
+import * as process from "process"
 
 export class Request implements servly.Request {
 	readonly method: servly.Request.Method | undefined

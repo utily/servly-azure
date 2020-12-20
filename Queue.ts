@@ -1,5 +1,5 @@
-import * as azure from "@azure/functions"
 import * as servly from "servly"
+import * as azure from "@azure/functions"
 import { Context } from "./Context"
 
 export function eject<T, S>(handler: servly.Queue<T, S>): azure.AzureFunction {

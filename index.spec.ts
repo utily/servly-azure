@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import { Context, HttpRequest } from "@azure/functions"
 import * as servly from "servly"
+import { Context, HttpRequest } from "@azure/functions"
 import * as azure from "./index"
 
 describe("servly-azure", () => {

@@ -1,6 +1,6 @@
+import * as servly from "servly"
 import * as azure from "@azure/functions"
 import { Context } from "./Context"
-import * as servly from "servly"
 
 type AzureTimer = {
 	readonly TimerSchedule: {

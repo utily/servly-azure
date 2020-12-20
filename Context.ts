@@ -1,6 +1,6 @@
-import * as azure from "@azure/functions"
 import * as isoly from "isoly"
 import * as servly from "servly"
+import * as azure from "@azure/functions"
 
 export namespace Context {
 	export function create(context: azure.Context, log: servly.Log, callback: servly.Request[]) {
