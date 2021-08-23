@@ -6,8 +6,8 @@ export class Request implements servly.Request {
 	readonly method: servly.Request.Method | undefined
 	readonly url: string
 	readonly baseUrl: string
-	readonly query: { [key: string]: string }
-	readonly parameter: { [key: string]: string }
+	readonly query: Record<string, string | undefined>
+	readonly parameter: Record<string, string | undefined>
 	readonly remote: string | undefined
 	readonly header: servly.Request.Header
 	readonly raw: Promise<any>
