@@ -24,9 +24,11 @@ export class Request implements servly.Request {
 		this.baseUrl = this.url.split("/", this.url.includes("//") ? 3 : 1).join("/")
 		this.query = (backend && backend.query) || {}
 		this.parameter = (backend && backend.params) || {}
-		this.remote = ((backend.params.MS_HttpContext as any) as {
-			request: { userHostAddress: string }
-		})?.request?.userHostAddress
+		this.remote = (
+			backend.params.MS_HttpContext as any as {
+				request: { userHostAddress: string }
+			}
+		)?.request?.userHostAddress
 		this.header = (backend && servly.Request.Header.from(backend.headers)) || {}
 		this.raw = backend && Promise.resolve(backend.rawBody)
 	}
