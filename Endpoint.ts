@@ -12,7 +12,7 @@ export const eject: servly.Function.Ejector<azure.FunctionHandler> = (handler: s
 		}
 		const callback: servly.Request[] = []
 		const c = Context.create(context, log, callback)
-		const response = await handler(c, new Request(request))
+		const response = await handler(new Request(request), c)
 		const meta = servly.Meta.freeze(c.meta)
 		if (log.entries.length > 0)
 			context.extraInputs.set("servlyLog", { ...log, ...meta })
