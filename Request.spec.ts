@@ -3,7 +3,7 @@ import { Request } from "./Request"
 
 describe("servly.Request", () => {
 	it("toJSON", () => {
-		const req: HttpRequest = {
+		const req = new HttpRequest({
 			method: "GET",
 			url: "http://localhost:7071/version",
 			headers: {
@@ -13,7 +13,7 @@ describe("servly.Request", () => {
 			},
 			query: {},
 			params: {},
-		}
+		})
 
 		const request = new Request(req)
 		expect(JSON.stringify(request)).toEqual(

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import * as servly from "servly"
-import { Context, HttpRequest } from "@azure/functions"
+import { HttpRequest, InvocationContext } from "@azure/functions"
 import * as azure from "./index"
 
 describe("servly-azure", () => {
@@ -8,41 +8,48 @@ describe("servly-azure", () => {
 		body: { name: "servly", url: request.url, baseUrl: request.baseUrl },
 	}))
 	const run = azure.eject(endpoint)
-	const req: HttpRequest = {
+	const request = new HttpRequest({
 		url: "http://test.com/folder/file.extension",
 		method: "GET",
 		headers: {},
 		query: {},
 		params: {},
-	}
-	const context: Context = {
-		req,
+	})
+
+	const extraInputs: Record<string, any> = {}
+	const extraOutputs: Record<string, any> = {}
+
+	const context: InvocationContext = {
 		invocationId: "1337",
-		executionContext: {
-			invocationId: "1337",
-			functionName: "run",
-			functionDirectory: "./",
-		},
+		functionName: "run",
 		traceContext: {
-			traceparent: undefined,
-			tracestate: undefined,
+			traceParent: undefined,
+			traceState: undefined,
 			attributes: undefined,
 		},
-		bindings: {},
-		bindingData: {},
-		bindingDefinitions: [],
-		log: {
-			...Object.assign((..._: any[]) => {}),
-			error: (..._: any[]) => {},
-			warn: (..._: any[]) => {},
-			info: (..._: any[]) => {},
-			verbose: (..._: any[]) => {},
+		log: (..._: any[]) => {},
+		error: (..._: any[]) => {},
+		warn: (..._: any[]) => {},
+		info: (..._: any[]) => {},
+		trace: (..._: any[]) => {},
+		debug: (..._: any[]) => {},
+		extraInputs: {
+			...new InvocationContext(),
+			get: (input: any): any => (typeof input == "string" ? extraInputs[input] : undefined),
+			set: (inputOrName: any, value: unknown): any =>
+				typeof inputOrName == "string" ? (extraInputs[inputOrName] = value) : undefined,
 		},
-		done: (_?: string | Error | null, result?: any) => Promise.resolve(result),
+		extraOutputs: {
+			...new InvocationContext(),
+			get: (input: any): any => extraOutputs[input],
+			set: (inputOrName: any, value: unknown): any => (extraOutputs[inputOrName] = value),
+		},
+		options: { extraInputs: [], extraOutputs: [], trigger: { type: "http", name: "test" } },
+		// done: (_?: string | Error | null, result?: any) => Promise.resolve(result), ?????
 	}
 	it("http", async () => {
-		await run(context, req)
-		expect(context.res).toEqual({
+		const response = await run(request, context)
+		expect(response).toEqual({
 			body: {
 				name: "servly",
 				url: "https://test.com/folder/file.extension",
@@ -56,8 +63,8 @@ describe("servly-azure", () => {
 		})
 	})
 	it("http://localhost", async () => {
-		await run(context, { ...req, url: "http://localhost:1337/folder/file.extension" })
-		expect(context.res).toEqual({
+		const response = await run({ ...request, url: "http://localhost:1337/folder/file.extension" }, context)
+		expect(response).toEqual({
 			body: {
 				name: "servly",
 				url: "http://localhost:1337/folder/file.extension",
@@ -72,8 +79,8 @@ describe("servly-azure", () => {
 	})
 	it("http://localhost", async () => {
 		process.env.baseUrl = "https://example.com"
-		await run(context, { ...req, url: "http://localhost:1337/folder/file.extension" })
-		expect(context.res).toEqual({
+		const response = await run({ ...request, url: "http://localhost:1337/folder/file.extension" }, context)
+		expect(response).toEqual({
 			body: {
 				name: "servly",
 				url: "https://example.com/folder/file.extension",

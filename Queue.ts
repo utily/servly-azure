@@ -2,18 +2,23 @@ import * as servly from "servly"
 import * as azure from "@azure/functions"
 import { Context } from "./Context"
 
-export function eject<T, S>(handler: servly.Queue<T, S>): azure.AzureFunction {
-	return async (context: azure.Context, item: T) => {
+export function eject<T, S>(handler: servly.Queue<T, S>): azure.FunctionHandler {
+	return async (item: T, context: azure.InvocationContext) => {
 		const log: servly.Log = {
-			invocation: context.executionContext.invocationId,
-			point: context.executionContext.functionName,
+			invocation: context.invocationId,
+			point: context.functionName,
 			entries: [],
 		}
 		const callback: servly.Request[] = []
 		const c = Context.create(context, log, callback)
 		await handler(c, item)
 		const meta = servly.Meta.freeze(c.meta)
-		context.bindings.log = log.entries.length > 0 ? { ...log, ...meta } : undefined
-		context.bindings.callback = callback.length > 0 ? callback.map(cb => ({ ...cb, meta })) : undefined
+		if (log.entries.length > 0)
+			context.extraInputs.set("servlyLog", { ...log, ...meta })
+		if (callback.length > 0)
+			context.extraInputs.set(
+				"servlyCallback",
+				callback.map(cb => ({ ...cb, meta }))
+			)
 	}
 }

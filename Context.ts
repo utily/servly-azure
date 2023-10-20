@@ -3,28 +3,28 @@ import * as servly from "servly"
 import * as azure from "@azure/functions"
 
 export namespace Context {
-	export function create(context: azure.Context, log: servly.Log, callback: servly.Request[]) {
+	export function create(context: azure.InvocationContext, log: servly.Log, callback: servly.Request[]) {
 		const result = servly.Context.create({
-			id: context.executionContext.invocationId,
+			id: context.invocationId,
 			function: {
-				name: context.executionContext.functionName,
-				path: context.executionContext.functionDirectory,
+				name: context.functionName,
+				path: `${context.extraOutputs?.get("path")}` || "unknown",
 			},
 			log: (step: string, level: servly.Log.Level, content: any) => {
 				let l: (...args: any[]) => void = context.log
 				switch (level) {
 					case "trace":
-						l = context.log.info
+						l = context.info
 						break
 					case "debug":
-						l = context.log.verbose
+						l = context.debug
 						break
 					case "warning":
-						l = context.log.warn
+						l = context.warn
 						break
 					case "error":
 					case "fatal":
-						l = context.log.error
+						l = context.error
 						break
 				}
 				l(step, level, JSON.stringify(result.meta), JSON.stringify(content))

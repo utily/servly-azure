@@ -12,7 +12,7 @@ export class Request implements servly.Request {
 	readonly header: servly.Request.Header
 	readonly raw: Promise<any>
 	constructor(backend: HttpRequest) {
-		this.method = (backend && backend.method) || undefined
+		this.method = backend && servly.Request.Method.is(backend.method) ? backend.method : undefined
 		this.url = (backend && backend.url) || ""
 		if (process.env.baseUrl)
 			this.url =
@@ -22,15 +22,15 @@ export class Request implements servly.Request {
 			// TODO: Fix for bug in Azure
 			this.url = "https:" + this.url.slice(5)
 		this.baseUrl = this.url.split("/", this.url.includes("//") ? 3 : 1).join("/")
-		this.query = (backend && backend.query) || {}
+		this.query = backend && backend.query ? Object.fromEntries(backend.query.entries()) : {}
 		this.parameter = (backend && backend.params) || {}
 		this.remote = (
-			backend.params.MS_HttpContext as any as {
+			backend.params?.MS_HttpContext as any as {
 				request: { userHostAddress: string }
 			}
 		)?.request?.userHostAddress
-		this.header = (backend && servly.Request.Header.from(backend.headers)) || {}
-		this.raw = backend && Promise.resolve(backend.rawBody)
+		this.header = (backend?.headers && servly.Request.Header.from(Object.fromEntries(backend.headers.entries()))) || {}
+		this.raw = backend && Promise.resolve(backend.body)
 	}
 	toJSON(): Omit<servly.Request, "baseUrl"> {
 		return {
