@@ -13,7 +13,7 @@ describe("servly.Request", () => {
 			},
 			query: {},
 			params: {},
-		}
+		} as unknown as HttpRequest
 
 		const request = new Request(req)
 		expect(JSON.stringify(request)).toEqual(
