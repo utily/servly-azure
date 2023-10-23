@@ -14,7 +14,7 @@ describe("servly-azure", () => {
 		headers: {},
 		query: {},
 		params: {},
-	}
+	} as HttpRequest
 	const context: Context = {
 		req,
 		invocationId: "1337",
@@ -22,14 +22,21 @@ describe("servly-azure", () => {
 			invocationId: "1337",
 			functionName: "run",
 			functionDirectory: "./",
+			retryContext: {
+				invocationId: "1337",
+				functionName: "run",
+				functionDirectory: "./",
+				retryCount: 0,
+				maxRetryCount: 1,
+			},
 		},
 		traceContext: {
 			traceparent: undefined,
 			tracestate: undefined,
 			attributes: undefined,
 		},
-		bindings: {},
-		bindingData: {},
+		bindings: { invocationId: "1337" },
+		bindingData: { invocationId: "1337" },
 		bindingDefinitions: [],
 		log: {
 			...Object.assign((..._: any[]) => {}),
@@ -39,7 +46,7 @@ describe("servly-azure", () => {
 			verbose: (..._: any[]) => {},
 		},
 		done: (_?: string | Error | null, result?: any) => Promise.resolve(result),
-	}
+	} as Context
 	it("http", async () => {
 		await run(context, req)
 		expect(context.res).toEqual({
