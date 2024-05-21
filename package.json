@@ -2,16 +2,16 @@
 	"name": "servly-azure",
 	"version": "0.2.1",
 	"description": "Azure Functions target for Servly.",
-	"author": "PayFunc",
+	"author": "Utily Contributors",
 	"license": "MIT",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/payfunc/servly-azure"
+		"url": "git+https://github.com/utily/servly-azure"
 	},
 	"bugs": {
-		"url": "https://github.com/payfunc/servly-azure/issues"
+		"url": "https://github.com/utily/servly-azure/issues"
 	},
-	"homepage": "https://payfunc.com/open-source/servly-azure",
+	"homepage": "https://github.com/utily/servly-azure",
 	"private": false,
 	"main": "dist/cjs/index.js",
 	"module": "dist/mjs/index.js",
