@@ -21,7 +21,7 @@ export class Request implements servly.Request {
 		else if (this.url.startsWith("http://") && !this.url.startsWith("http://localhost"))
 			// TODO: Fix for bug in Azure
 			this.url = "https:" + this.url.slice(5)
-		this.baseUrl = this.url.split("/", this.url.includes("//") ? 3 : 1).join("/")
+		this.baseUrl = process.env.baseUrl ?? this.url.split("/", this.url.includes("//") ? 3 : 1).join("/")
 		this.query = (backend && backend.query) || {}
 		this.parameter = (backend && backend.params) || {}
 		this.remote = (
